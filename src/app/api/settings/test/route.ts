@@ -28,12 +28,20 @@ export async function POST(request: Request) {
           'content-type': 'application/json',
         },
         body: JSON.stringify({
-          model: 'claude-sonnet-4-20250514',
+          model: 'claude-3-5-sonnet-20241022',
           max_tokens: 10,
           messages: [{ role: 'user', content: 'Hi' }],
         }),
       });
-      return NextResponse.json({ success: res.ok });
+      // 200 = success, 401 = bad key, other errors may just be model access
+      if (res.ok) return NextResponse.json({ success: true });
+      const err = await res.json().catch(() => null);
+      const status = res.status;
+      if (status === 401) return NextResponse.json({ success: false, error: 'Invalid API key' });
+      if (status === 403) return NextResponse.json({ success: false, error: 'API key lacks permission' });
+      // 400/404 with valid auth means the key works but model may differ - still valid
+      if (status === 400 || status === 404) return NextResponse.json({ success: true });
+      return NextResponse.json({ success: false, error: err?.error?.message || `HTTP ${status}` });
     }
 
     if (provider === 'youtube') {
