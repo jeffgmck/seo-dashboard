@@ -1,65 +1,167 @@
-import Image from "next/image";
+'use client';
 
-export default function Home() {
+import { useClients } from '@/components/ClientProvider';
+import Link from 'next/link';
+
+export default function Dashboard() {
+  const { clients, activeClient } = useClients();
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <div className="max-w-6xl">
+      <h1 className="text-2xl font-bold text-white mb-2">Dashboard</h1>
+      <p className="text-gray-400 mb-8">Local SEO automation overview</p>
+
+      {!activeClient ? (
+        <div className="bg-gray-900 border border-gray-800 rounded-xl p-8 text-center">
+          <svg className="w-12 h-12 text-gray-600 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg>
+          <h2 className="text-lg font-semibold text-white mb-2">No Client Selected</h2>
+          <p className="text-gray-400 mb-6">Select or create a client to get started with the SEO workflow.</p>
+          <Link
+            href="/clients"
+            className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+            </svg>
+            Manage Clients
+          </Link>
         </div>
-      </main>
+      ) : (
+        <div className="space-y-6">
+          {/* Quick Stats */}
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <StatCard title="GBP Categories" value="--" subtitle="Run GBP Audit to populate" />
+            <StatCard title="Pages Crawled" value="--" subtitle="Run Site Crawl to populate" />
+            <StatCard title="Content Generated" value="--" subtitle="No content yet" />
+            <StatCard title="Published Pages" value="--" subtitle="No pages published" />
+          </div>
+
+          {/* Workflow Steps */}
+          <div className="bg-gray-900 border border-gray-800 rounded-xl p-6">
+            <h2 className="text-lg font-semibold text-white mb-4">SEO Workflow</h2>
+            <div className="space-y-3">
+              <WorkflowStep
+                step={1}
+                title="Client Settings"
+                description="Configure GBP data, business info, voice/tone, and WordPress connection"
+                href={`/clients/${activeClient.id}/client-settings`}
+                status="pending"
+              />
+              <WorkflowStep
+                step={2}
+                title="GBP Audit & Entity Research"
+                description="Audit categories, analyze service entity overlap"
+                href={`/clients/${activeClient.id}/gbp-audit`}
+                status="pending"
+              />
+              <WorkflowStep
+                step={3}
+                title="Site Crawl & Analysis"
+                description="Crawl website, assign pages to services, run gap analysis"
+                href={`/clients/${activeClient.id}/site-crawl`}
+                status="pending"
+              />
+              <WorkflowStep
+                step={4}
+                title="Content Production"
+                description="Generate humanized SEO content with 8-pass pipeline"
+                href={`/clients/${activeClient.id}/content-production`}
+                status="pending"
+              />
+              <WorkflowStep
+                step={5}
+                title="WordPress Publish"
+                description="Review and publish content to WordPress"
+                href={`/clients/${activeClient.id}/wordpress`}
+                status="pending"
+              />
+            </div>
+          </div>
+
+          {/* Quick Actions */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <Link
+              href={`/clients/${activeClient.id}/client-settings`}
+              className="bg-gray-900 border border-gray-800 rounded-xl p-4 hover:border-gray-700 transition-colors group"
+            >
+              <h3 className="text-sm font-semibold text-white group-hover:text-blue-400 transition-colors">Configure Client</h3>
+              <p className="text-xs text-gray-500 mt-1">Set up GBP data and preferences</p>
+            </Link>
+            <Link
+              href={`/clients/${activeClient.id}/content-production`}
+              className="bg-gray-900 border border-gray-800 rounded-xl p-4 hover:border-gray-700 transition-colors group"
+            >
+              <h3 className="text-sm font-semibold text-white group-hover:text-blue-400 transition-colors">Generate Content</h3>
+              <p className="text-xs text-gray-500 mt-1">Start the content pipeline</p>
+            </Link>
+            <Link
+              href={`/clients/${activeClient.id}/content-library`}
+              className="bg-gray-900 border border-gray-800 rounded-xl p-4 hover:border-gray-700 transition-colors group"
+            >
+              <h3 className="text-sm font-semibold text-white group-hover:text-blue-400 transition-colors">Content Library</h3>
+              <p className="text-xs text-gray-500 mt-1">View all generated content</p>
+            </Link>
+          </div>
+        </div>
+      )}
+
+      {/* Clients Overview */}
+      {clients.length > 0 && (
+        <div className="mt-8 bg-gray-900 border border-gray-800 rounded-xl p-6">
+          <h2 className="text-lg font-semibold text-white mb-4">All Clients ({clients.length})</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+            {clients.map(client => (
+              <div
+                key={client.id}
+                className={`p-3 rounded-lg border transition-colors cursor-pointer ${
+                  client.id === activeClient?.id
+                    ? 'border-blue-500/50 bg-blue-600/10'
+                    : 'border-gray-800 hover:border-gray-700'
+                }`}
+              >
+                <p className="text-sm font-medium text-white">{client.name}</p>
+                <p className="text-xs text-gray-500">{client.businessName}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
+  );
+}
+
+function StatCard({ title, value, subtitle }: { title: string; value: string; subtitle: string }) {
+  return (
+    <div className="bg-gray-900 border border-gray-800 rounded-xl p-4">
+      <p className="text-xs text-gray-500 uppercase tracking-wider">{title}</p>
+      <p className="text-2xl font-bold text-white mt-1">{value}</p>
+      <p className="text-xs text-gray-500 mt-1">{subtitle}</p>
+    </div>
+  );
+}
+
+function WorkflowStep({ step, title, description, href, status }: {
+  step: number;
+  title: string;
+  description: string;
+  href: string;
+  status: 'pending' | 'complete' | 'active';
+}) {
+  return (
+    <Link href={href} className="flex items-center gap-4 p-3 rounded-lg hover:bg-gray-800/50 transition-colors group">
+      <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold shrink-0 ${
+        status === 'complete' ? 'bg-emerald-600 text-white' :
+        status === 'active' ? 'bg-blue-600 text-white' :
+        'bg-gray-800 text-gray-400 border border-gray-700'
+      }`}>
+        {status === 'complete' ? '\u2713' : step}
+      </div>
+      <div>
+        <p className="text-sm font-medium text-white group-hover:text-blue-400 transition-colors">{title}</p>
+        <p className="text-xs text-gray-500">{description}</p>
+      </div>
+    </Link>
   );
 }
