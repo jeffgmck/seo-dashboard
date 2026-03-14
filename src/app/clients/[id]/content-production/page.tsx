@@ -142,31 +142,31 @@ export default function ContentProductionPage({ params }: { params: Promise<{ id
         {/* Left - Controls */}
         <div className="lg:col-span-2 space-y-6">
           {/* Service Selection */}
-          <div className="bg-gray-900 border border-gray-800 rounded-xl p-6">
+          <div className="bg-[#131720] border border-gray-800/60 rounded-xl p-6">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-base font-semibold text-white">Select Services</h2>
-              <button onClick={selectAll} className="text-xs text-blue-400 hover:text-blue-300">Select All</button>
+              <button onClick={selectAll} className="text-xs text-teal-400 hover:text-blue-300">Select All</button>
             </div>
             {contentPlan.length === 0 ? (
               <p className="text-sm text-gray-500">No content plan available. Run a gap analysis first from Site Crawl & Analysis.</p>
             ) : (
               <div className="space-y-2 max-h-64 overflow-y-auto">
                 {contentPlan.map((item, i) => (
-                  <label key={i} className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-800/50 cursor-pointer">
+                  <label key={i} className="flex items-center gap-3 p-2 rounded-lg hover:bg-[#1a1f2e]/50 cursor-pointer">
                     <input
                       type="checkbox"
                       checked={selectedServices.has(item.service)}
                       onChange={() => toggleService(item.service)}
-                      className="rounded border-gray-600 bg-gray-800 text-blue-600 focus:ring-blue-500"
+                      className="rounded border-gray-600 bg-[#1a1f2e] text-blue-600 focus:ring-teal-500"
                     />
                     <div className="flex-1">
                       <span className="text-sm text-white">{item.service}</span>
                       <span className="text-xs text-gray-500 ml-2">{item.category}</span>
                     </div>
                     <span className={`text-xs px-2 py-0.5 rounded ${
-                      item.status === 'generated' ? 'bg-emerald-600/20 text-emerald-400' :
-                      item.status === 'in_progress' ? 'bg-blue-600/20 text-blue-400' :
-                      'bg-gray-800 text-gray-500'
+                      item.status === 'generated' ? 'bg-teal-500/15 text-teal-400' :
+                      item.status === 'in_progress' ? 'bg-teal-600/20 text-teal-400' :
+                      'bg-[#1a1f2e] text-gray-500'
                     }`}>
                       {item.status}
                     </span>
@@ -177,7 +177,7 @@ export default function ContentProductionPage({ params }: { params: Promise<{ id
           </div>
 
           {/* Options */}
-          <div className="bg-gray-900 border border-gray-800 rounded-xl p-6">
+          <div className="bg-[#131720] border border-gray-800/60 rounded-xl p-6">
             <h2 className="text-base font-semibold text-white mb-4">Generation Options</h2>
             <div className="grid grid-cols-2 gap-4">
               <div>
@@ -185,7 +185,7 @@ export default function ContentProductionPage({ params }: { params: Promise<{ id
                 <input
                   value={city}
                   onChange={e => setCity(e.target.value)}
-                  className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500"
+                  className="w-full bg-[#1a1f2e] border border-gray-700/60 rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none focus:border-teal-500/50"
                 />
               </div>
               <div>
@@ -196,7 +196,7 @@ export default function ContentProductionPage({ params }: { params: Promise<{ id
                   onChange={e => setImagesPerPage(parseInt(e.target.value) || 0)}
                   min={0}
                   max={10}
-                  className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500"
+                  className="w-full bg-[#1a1f2e] border border-gray-700/60 rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none focus:border-teal-500/50"
                 />
               </div>
               <div>
@@ -206,21 +206,21 @@ export default function ContentProductionPage({ params }: { params: Promise<{ id
                   value={videoEveryNth}
                   onChange={e => setVideoEveryNth(parseInt(e.target.value) || 0)}
                   min={0}
-                  className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500"
+                  className="w-full bg-[#1a1f2e] border border-gray-700/60 rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none focus:border-teal-500/50"
                 />
               </div>
             </div>
             <div className="mt-4 space-y-3">
               <label className="flex items-center gap-3 cursor-pointer">
-                <input type="checkbox" checked={autoHumanize} onChange={e => setAutoHumanize(e.target.checked)} className="rounded border-gray-600 bg-gray-800 text-blue-600" />
+                <input type="checkbox" checked={autoHumanize} onChange={e => setAutoHumanize(e.target.checked)} className="rounded border-gray-600 bg-[#1a1f2e] text-blue-600" />
                 <span className="text-sm text-gray-300">Auto-humanize (run all 8 passes)</span>
               </label>
               <label className="flex items-center gap-3 cursor-pointer">
-                <input type="checkbox" checked={approveOutlines} onChange={e => setApproveOutlines(e.target.checked)} className="rounded border-gray-600 bg-gray-800 text-blue-600" />
+                <input type="checkbox" checked={approveOutlines} onChange={e => setApproveOutlines(e.target.checked)} className="rounded border-gray-600 bg-[#1a1f2e] text-blue-600" />
                 <span className="text-sm text-gray-300">Approve outlines before full generation</span>
               </label>
               <label className="flex items-center gap-3 cursor-pointer">
-                <input type="checkbox" checked={autoPublish} onChange={e => setAutoPublish(e.target.checked)} className="rounded border-gray-600 bg-gray-800 text-blue-600" />
+                <input type="checkbox" checked={autoPublish} onChange={e => setAutoPublish(e.target.checked)} className="rounded border-gray-600 bg-[#1a1f2e] text-blue-600" />
                 <span className="text-sm text-gray-300">Auto-publish to WordPress</span>
               </label>
             </div>
@@ -230,7 +230,7 @@ export default function ContentProductionPage({ params }: { params: Promise<{ id
           <button
             onClick={startGeneration}
             disabled={generating || selectedServices.size === 0}
-            className="w-full bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white py-3 rounded-lg text-sm font-medium transition-colors"
+            className="w-full bg-teal-600 hover:bg-teal-700 disabled:opacity-50 text-white py-3 rounded-lg text-sm font-medium transition-colors"
           >
             {generating
               ? `Generating: ${currentItem} (Pass ${currentPass + 1}/8 - ${PASS_NAMES[currentPass]})`
@@ -239,15 +239,15 @@ export default function ContentProductionPage({ params }: { params: Promise<{ id
 
           {/* Progress */}
           {generating && (
-            <div className="bg-gray-900 border border-gray-800 rounded-xl p-4">
+            <div className="bg-[#131720] border border-gray-800/60 rounded-xl p-4">
               <div className="flex gap-1 mb-2">
                 {PASS_NAMES.map((name, i) => (
                   <div
                     key={i}
                     className={`flex-1 h-2 rounded-full transition-colors ${
-                      i < currentPass ? 'bg-emerald-500' :
+                      i < currentPass ? 'bg-teal-500' :
                       i === currentPass ? 'bg-blue-500 animate-pulse' :
-                      'bg-gray-800'
+                      'bg-[#1a1f2e]'
                     }`}
                     title={name}
                   />
@@ -261,7 +261,7 @@ export default function ContentProductionPage({ params }: { params: Promise<{ id
         </div>
 
         {/* Right - Activity Log */}
-        <div className="bg-gray-900 border border-gray-800 rounded-xl p-4 h-fit max-h-[600px] overflow-y-auto">
+        <div className="bg-[#131720] border border-gray-800/60 rounded-xl p-4 h-fit max-h-[600px] overflow-y-auto">
           <h2 className="text-sm font-semibold text-white mb-3">Generation Log</h2>
           {logs.length === 0 ? (
             <p className="text-xs text-gray-500">Select services and click Generate to start.</p>
@@ -277,17 +277,17 @@ export default function ContentProductionPage({ params }: { params: Promise<{ id
 
       {/* Generated Content Preview */}
       {generatedContent.length > 0 && (
-        <div className="mt-6 bg-gray-900 border border-gray-800 rounded-xl p-6">
+        <div className="mt-6 bg-[#131720] border border-gray-800/60 rounded-xl p-6">
           <h2 className="text-base font-semibold text-white mb-4">Generated Content ({generatedContent.length})</h2>
           <div className="space-y-3">
             {generatedContent.map((content) => (
-              <div key={content.id} className="p-4 rounded-lg border border-gray-800 hover:border-gray-700 transition-colors">
+              <div key={content.id} className="p-4 rounded-lg border border-gray-800/60 hover:border-gray-700/60 transition-colors">
                 <div className="flex items-center justify-between mb-1">
                   <h3 className="text-sm font-medium text-white">{content.title}</h3>
                   <span className={`text-xs px-2 py-0.5 rounded ${
-                    content.status === 'published' ? 'bg-emerald-600/20 text-emerald-400' :
-                    content.status === 'final' ? 'bg-blue-600/20 text-blue-400' :
-                    'bg-gray-800 text-gray-500'
+                    content.status === 'published' ? 'bg-teal-500/15 text-teal-400' :
+                    content.status === 'final' ? 'bg-teal-600/20 text-teal-400' :
+                    'bg-[#1a1f2e] text-gray-500'
                   }`}>
                     {content.status}
                   </span>

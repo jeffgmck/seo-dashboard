@@ -86,19 +86,19 @@ export default function SiteCrawlPage({ params }: { params: Promise<{ id: string
       <p className="text-gray-400 mb-8">Crawl website, assign pages to services, and identify content gaps</p>
 
       {/* Crawl Input */}
-      <div className="bg-gray-900 border border-gray-800 rounded-xl p-6 mb-6">
+      <div className="bg-[#131720] border border-gray-800/60 rounded-xl p-6 mb-6">
         <h2 className="text-base font-semibold text-white mb-4">Crawl Website</h2>
         <div className="flex gap-3">
           <input
             value={url}
             onChange={e => setUrl(e.target.value)}
             placeholder="https://example.com"
-            className="flex-1 bg-gray-800 border border-gray-700 rounded-lg px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-500"
+            className="flex-1 bg-[#1a1f2e] border border-gray-700/60 rounded-lg px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-teal-500/50"
           />
           <button
             onClick={startCrawl}
             disabled={crawling || !url}
-            className="bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white px-6 py-2.5 rounded-lg text-sm font-medium transition-colors whitespace-nowrap"
+            className="bg-teal-600 hover:bg-teal-700 disabled:opacity-50 text-white px-6 py-2.5 rounded-lg text-sm font-medium transition-colors whitespace-nowrap"
           >
             {crawling ? 'Crawling...' : 'Start Crawl'}
           </button>
@@ -108,7 +108,7 @@ export default function SiteCrawlPage({ params }: { params: Promise<{ id: string
 
       {/* Crawled Pages */}
       {pages.length > 0 && (
-        <div className="bg-gray-900 border border-gray-800 rounded-xl p-6 mb-6">
+        <div className="bg-[#131720] border border-gray-800/60 rounded-xl p-6 mb-6">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-base font-semibold text-white">Crawled Pages ({pages.length})</h2>
             <button
@@ -123,7 +123,7 @@ export default function SiteCrawlPage({ params }: { params: Promise<{ id: string
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-gray-800 text-gray-500">
+                <tr className="border-b border-gray-800/60 text-gray-500">
                   <th className="text-left py-2 pr-4 font-medium">URL</th>
                   <th className="text-left py-2 pr-4 font-medium">Title</th>
                   <th className="text-left py-2 pr-4 font-medium">Words</th>
@@ -133,9 +133,9 @@ export default function SiteCrawlPage({ params }: { params: Promise<{ id: string
               </thead>
               <tbody>
                 {pages.map((page, i) => (
-                  <tr key={i} className="border-b border-gray-800/50">
+                  <tr key={i} className="border-b border-gray-800/60/50">
                     <td className="py-2 pr-4">
-                      <span className="text-blue-400 text-xs truncate block max-w-48" title={page.url}>
+                      <span className="text-teal-400 text-xs truncate block max-w-48" title={page.url}>
                         {page.url.replace(/^https?:\/\/[^/]+/, '')}
                       </span>
                     </td>
@@ -147,7 +147,7 @@ export default function SiteCrawlPage({ params }: { params: Promise<{ id: string
                       <select
                         value={page.assignedService}
                         onChange={e => updatePageAssignment(i, 'assignedService', e.target.value)}
-                        className="bg-gray-800 border border-gray-700 rounded px-2 py-1 text-xs text-gray-300"
+                        className="bg-[#1a1f2e] border border-gray-700/60 rounded px-2 py-1 text-xs text-gray-300"
                       >
                         <option value="">Unassigned</option>
                         {services.map(s => (
@@ -168,7 +168,7 @@ export default function SiteCrawlPage({ params }: { params: Promise<{ id: string
 
       {/* Gap Analysis Results */}
       {gapAnalysis && (
-        <div className="bg-gray-900 border border-gray-800 rounded-xl p-6">
+        <div className="bg-[#131720] border border-gray-800/60 rounded-xl p-6">
           <h2 className="text-base font-semibold text-white mb-4">Gap Analysis</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>

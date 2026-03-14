@@ -83,7 +83,7 @@ export default function ClientsPage() {
         </div>
         <button
           onClick={() => { setShowAddForm(true); setEditingId(null); setName(''); setBusinessName(''); }}
-          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-2"
+          className="bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-2"
         >
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -94,7 +94,7 @@ export default function ClientsPage() {
 
       {/* Add/Edit Form */}
       {(showAddForm || editingId) && (
-        <div className="bg-gray-900 border border-gray-800 rounded-xl p-6 mb-6">
+        <div className="bg-[#131720] border border-gray-800/60 rounded-xl p-6 mb-6">
           <h2 className="text-base font-semibold text-white mb-4">
             {editingId ? 'Edit Client' : 'Add New Client'}
           </h2>
@@ -105,7 +105,7 @@ export default function ClientsPage() {
                 value={name}
                 onChange={e => setName(e.target.value)}
                 placeholder="e.g., John's Plumbing"
-                className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-500"
+                className="w-full bg-[#1a1f2e] border border-gray-700/60 rounded-lg px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-teal-500/50"
                 onKeyDown={e => e.key === 'Enter' && (editingId ? handleEdit(editingId) : handleAdd())}
               />
             </div>
@@ -115,20 +115,20 @@ export default function ClientsPage() {
                 value={businessName}
                 onChange={e => setBusinessName(e.target.value)}
                 placeholder="e.g., John's Plumbing LLC"
-                className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-500"
+                className="w-full bg-[#1a1f2e] border border-gray-700/60 rounded-lg px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-teal-500/50"
                 onKeyDown={e => e.key === 'Enter' && (editingId ? handleEdit(editingId) : handleAdd())}
               />
             </div>
             <div className="flex gap-3">
               <button
                 onClick={() => editingId ? handleEdit(editingId) : handleAdd()}
-                className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+                className="bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
               >
                 {editingId ? 'Save Changes' : 'Add Client'}
               </button>
               <button
                 onClick={() => { setShowAddForm(false); setEditingId(null); }}
-                className="bg-gray-800 hover:bg-gray-700 text-gray-400 px-4 py-2 rounded-lg text-sm transition-colors"
+                className="bg-[#1a1f2e] hover:bg-gray-700 text-gray-400 px-4 py-2 rounded-lg text-sm transition-colors"
               >
                 Cancel
               </button>
@@ -139,7 +139,7 @@ export default function ClientsPage() {
 
       {/* Client List */}
       {clients.length === 0 ? (
-        <div className="bg-gray-900 border border-gray-800 rounded-xl p-8 text-center">
+        <div className="bg-[#131720] border border-gray-800/60 rounded-xl p-8 text-center">
           <p className="text-gray-400">No clients yet. Add your first client to get started.</p>
         </div>
       ) : (
@@ -147,8 +147,8 @@ export default function ClientsPage() {
           {clients.map(client => (
             <div
               key={client.id}
-              className={`bg-gray-900 border rounded-xl p-4 transition-colors ${
-                client.id === activeClient?.id ? 'border-blue-500/50' : 'border-gray-800'
+              className={`bg-[#131720] border rounded-xl p-4 transition-colors ${
+                client.id === activeClient?.id ? 'border-teal-500/50' : 'border-gray-800/60'
               }`}
             >
               <div className="flex items-center justify-between">
@@ -156,7 +156,7 @@ export default function ClientsPage() {
                   <div className="flex items-center gap-2">
                     <h3 className="text-sm font-semibold text-white truncate">{client.name}</h3>
                     {client.id === activeClient?.id && (
-                      <span className="text-xs px-2 py-0.5 rounded bg-blue-600/20 text-blue-400 border border-blue-500/30">
+                      <span className="text-xs px-2 py-0.5 rounded bg-teal-600/20 text-teal-400 border border-teal-500/30">
                         Active
                       </span>
                     )}
@@ -170,21 +170,21 @@ export default function ClientsPage() {
                   {client.id !== activeClient?.id ? (
                     <button
                       onClick={() => setActiveClientId(client.id)}
-                      className="text-xs px-3 py-1.5 rounded-lg bg-blue-600/20 text-blue-400 border border-blue-500/30 hover:bg-blue-600/30 transition-colors"
+                      className="text-xs px-3 py-1.5 rounded-lg bg-teal-600/20 text-teal-400 border border-teal-500/30 hover:bg-teal-600/30 transition-colors"
                     >
                       Set Active
                     </button>
                   ) : (
                     <button
                       onClick={() => router.push(`/clients/${client.id}/client-settings`)}
-                      className="text-xs px-3 py-1.5 rounded-lg bg-gray-800 text-gray-400 border border-gray-700 hover:border-gray-600 transition-colors"
+                      className="text-xs px-3 py-1.5 rounded-lg bg-[#1a1f2e] text-gray-400 border border-gray-700/60 hover:border-gray-600 transition-colors"
                     >
                       Configure
                     </button>
                   )}
                   <button
                     onClick={() => startEdit(client)}
-                    className="p-1.5 rounded-lg text-gray-500 hover:text-white hover:bg-gray-800 transition-colors"
+                    className="p-1.5 rounded-lg text-gray-500 hover:text-white hover:bg-[#1a1f2e] transition-colors"
                     title="Edit"
                   >
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -194,7 +194,7 @@ export default function ClientsPage() {
                   <button
                     onClick={() => handleDelete(client.id)}
                     disabled={deleting === client.id}
-                    className="p-1.5 rounded-lg text-gray-500 hover:text-red-400 hover:bg-gray-800 transition-colors"
+                    className="p-1.5 rounded-lg text-gray-500 hover:text-red-400 hover:bg-[#1a1f2e] transition-colors"
                     title="Delete"
                   >
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

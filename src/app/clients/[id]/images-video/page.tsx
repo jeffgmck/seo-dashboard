@@ -45,7 +45,7 @@ export default function ImagesVideoPage({ params }: { params: Promise<{ id: stri
       </div>
 
       {/* Image Generation */}
-      <div className="bg-gray-900 border border-gray-800 rounded-xl p-6 mb-6">
+      <div className="bg-[#131720] border border-gray-800/60 rounded-xl p-6 mb-6">
         <h2 className="text-base font-semibold text-white mb-4">Generate Image</h2>
         <div className="space-y-4">
           <div>
@@ -55,7 +55,7 @@ export default function ImagesVideoPage({ params }: { params: Promise<{ id: stri
               onChange={e => setPrompt(e.target.value)}
               placeholder="e.g., A professional plumber repairing a water heater in a modern kitchen"
               rows={3}
-              className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-500"
+              className="w-full bg-[#1a1f2e] border border-gray-700/60 rounded-lg px-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-teal-500/50"
             />
           </div>
           <div>
@@ -63,7 +63,7 @@ export default function ImagesVideoPage({ params }: { params: Promise<{ id: stri
             <select
               value={style}
               onChange={e => setStyle(e.target.value)}
-              className="bg-gray-800 border border-gray-700 rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500"
+              className="bg-[#1a1f2e] border border-gray-700/60 rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none focus:border-teal-500/50"
             >
               <option value="professional photography">Professional Photography</option>
               <option value="illustration">Illustration</option>
@@ -76,7 +76,7 @@ export default function ImagesVideoPage({ params }: { params: Promise<{ id: stri
           <button
             onClick={generateImage}
             disabled={generating || !prompt.trim()}
-            className="bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+            className="bg-teal-600 hover:bg-teal-700 disabled:opacity-50 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
           >
             {generating ? 'Generating...' : 'Generate Image'}
           </button>
@@ -85,12 +85,12 @@ export default function ImagesVideoPage({ params }: { params: Promise<{ id: stri
 
       {/* Generated Images */}
       {images.length > 0 && (
-        <div className="bg-gray-900 border border-gray-800 rounded-xl p-6">
+        <div className="bg-[#131720] border border-gray-800/60 rounded-xl p-6">
           <h2 className="text-base font-semibold text-white mb-4">Generated Images</h2>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
             {images.map((img, i) => (
-              <div key={i} className="border border-gray-800 rounded-lg overflow-hidden">
-                <div className="aspect-square bg-gray-800 flex items-center justify-center">
+              <div key={i} className="border border-gray-800/60 rounded-lg overflow-hidden">
+                <div className="aspect-square bg-[#1a1f2e] flex items-center justify-center">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={img.url} alt={img.prompt} className="w-full h-full object-cover" />
                 </div>
@@ -105,16 +105,16 @@ export default function ImagesVideoPage({ params }: { params: Promise<{ id: stri
       )}
 
       {images.length === 0 && (
-        <div className="bg-gray-900 border border-gray-800 rounded-xl p-8 text-center">
+        <div className="bg-[#131720] border border-gray-800/60 rounded-xl p-8 text-center">
           <p className="text-gray-500 text-sm">No images generated yet. Enter a prompt above to get started.</p>
         </div>
       )}
 
       {/* Video Section */}
-      <div className="mt-6 bg-gray-900 border border-gray-800 rounded-xl p-6">
+      <div className="mt-6 bg-[#131720] border border-gray-800/60 rounded-xl p-6">
         <div className="flex items-center gap-2 mb-2">
           <h2 className="text-base font-semibold text-white">Video Generation</h2>
-          <span className="text-xs px-2 py-0.5 rounded bg-gray-800 text-gray-500 border border-gray-700">Coming Soon</span>
+          <span className="text-xs px-2 py-0.5 rounded bg-[#1a1f2e] text-gray-500 border border-gray-700/60">Coming Soon</span>
         </div>
         <p className="text-sm text-gray-500">Video generation via YouTube Data API is optional and can be configured later.</p>
       </div>

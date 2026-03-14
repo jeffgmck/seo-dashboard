@@ -38,32 +38,32 @@ export default function ContentLibraryPage({ params }: { params: Promise<{ id: s
 
       {/* Stats */}
       <div className="grid grid-cols-4 gap-4 mb-6">
-        <div className="bg-gray-900 border border-gray-800 rounded-xl p-4">
+        <div className="bg-[#131720] border border-gray-800/60 rounded-xl p-4">
           <p className="text-xs text-gray-500 uppercase">Total Content</p>
           <p className="text-2xl font-bold text-white mt-1">{content.length}</p>
         </div>
-        <div className="bg-gray-900 border border-gray-800 rounded-xl p-4">
+        <div className="bg-[#131720] border border-gray-800/60 rounded-xl p-4">
           <p className="text-xs text-gray-500 uppercase">Total Words</p>
           <p className="text-2xl font-bold text-white mt-1">{content.reduce((sum, c) => sum + c.wordCount, 0).toLocaleString()}</p>
         </div>
-        <div className="bg-gray-900 border border-gray-800 rounded-xl p-4">
+        <div className="bg-[#131720] border border-gray-800/60 rounded-xl p-4">
           <p className="text-xs text-gray-500 uppercase">Total Images</p>
           <p className="text-2xl font-bold text-white mt-1">{content.reduce((sum, c) => sum + c.images.length, 0)}</p>
         </div>
-        <div className="bg-gray-900 border border-gray-800 rounded-xl p-4">
+        <div className="bg-[#131720] border border-gray-800/60 rounded-xl p-4">
           <p className="text-xs text-gray-500 uppercase">Published</p>
           <p className="text-2xl font-bold text-white mt-1">{statusCounts.published}</p>
         </div>
       </div>
 
       {/* Filter */}
-      <div className="flex gap-1 mb-6 bg-gray-900 p-1 rounded-lg border border-gray-800">
+      <div className="flex gap-1 mb-6 bg-[#131720] p-1 rounded-lg border border-gray-800/60">
         {(['all', 'draft', 'final', 'published'] as const).map(f => (
           <button
             key={f}
             onClick={() => setFilter(f)}
             className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
-              filter === f ? 'bg-gray-800 text-white' : 'text-gray-400 hover:text-gray-200'
+              filter === f ? 'bg-[#1a1f2e] text-white' : 'text-gray-400 hover:text-gray-200'
             }`}
           >
             {f.charAt(0).toUpperCase() + f.slice(1)} ({statusCounts[f]})
@@ -75,7 +75,7 @@ export default function ContentLibraryPage({ params }: { params: Promise<{ id: s
         {/* Content List */}
         <div className="flex-1">
           {filtered.length === 0 ? (
-            <div className="bg-gray-900 border border-gray-800 rounded-xl p-8 text-center">
+            <div className="bg-[#131720] border border-gray-800/60 rounded-xl p-8 text-center">
               <p className="text-gray-500 text-sm">No content yet. Generate content from the Content Production page.</p>
             </div>
           ) : (
@@ -86,16 +86,16 @@ export default function ContentLibraryPage({ params }: { params: Promise<{ id: s
                   onClick={() => setSelectedId(item.id === selectedId ? null : item.id)}
                   className={`w-full text-left p-4 rounded-xl border transition-colors ${
                     item.id === selectedId
-                      ? 'border-blue-500/50 bg-gray-900'
-                      : 'border-gray-800 bg-gray-900 hover:border-gray-700'
+                      ? 'border-teal-500/50 bg-[#131720]'
+                      : 'border-gray-800/60 bg-[#131720] hover:border-gray-700/60'
                   }`}
                 >
                   <div className="flex items-center justify-between">
                     <h3 className="text-sm font-medium text-white truncate">{item.title}</h3>
                     <span className={`text-xs px-2 py-0.5 rounded shrink-0 ml-2 ${
-                      item.status === 'published' ? 'bg-emerald-600/20 text-emerald-400 border border-emerald-500/30' :
-                      item.status === 'final' ? 'bg-blue-600/20 text-blue-400 border border-blue-500/30' :
-                      'bg-gray-800 text-gray-400 border border-gray-700'
+                      item.status === 'published' ? 'bg-teal-500/15 text-teal-400 border border-teal-500/30' :
+                      item.status === 'final' ? 'bg-teal-600/20 text-teal-400 border border-teal-500/30' :
+                      'bg-[#1a1f2e] text-gray-400 border border-gray-700/60'
                     }`}>
                       {item.status}
                     </span>
@@ -116,7 +116,7 @@ export default function ContentLibraryPage({ params }: { params: Promise<{ id: s
         {/* Preview Panel */}
         {selected && (
           <div className="w-96 shrink-0">
-            <div className="bg-gray-900 border border-gray-800 rounded-xl p-6 sticky top-6">
+            <div className="bg-[#131720] border border-gray-800/60 rounded-xl p-6 sticky top-6">
               <h2 className="text-base font-semibold text-white mb-4">{selected.title}</h2>
               <div className="space-y-3 text-xs">
                 <div className="flex justify-between">
@@ -146,11 +146,11 @@ export default function ContentLibraryPage({ params }: { params: Promise<{ id: s
                 {selected.wpUrl && (
                   <div className="flex justify-between">
                     <span className="text-gray-500">WordPress</span>
-                    <a href={selected.wpUrl} target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">View</a>
+                    <a href={selected.wpUrl} target="_blank" rel="noopener noreferrer" className="text-teal-400 hover:underline">View</a>
                   </div>
                 )}
               </div>
-              <div className="mt-4 pt-4 border-t border-gray-800">
+              <div className="mt-4 pt-4 border-t border-gray-800/60">
                 <h3 className="text-xs font-semibold text-gray-400 mb-2">Content Preview</h3>
                 <div
                   className="text-xs text-gray-300 max-h-64 overflow-y-auto prose prose-invert prose-xs"

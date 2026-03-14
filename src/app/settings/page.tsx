@@ -109,7 +109,7 @@ export default function SettingsPage() {
 
       <div className="space-y-6">
         {/* OpenAI API Key */}
-        <div className="bg-gray-900 border border-gray-800 rounded-xl p-6">
+        <div className="bg-[#131720] border border-gray-800/60 rounded-xl p-6">
           <div className="flex items-center justify-between mb-4">
             <div>
               <h2 className="text-base font-semibold text-white">OpenAI API Key</h2>
@@ -122,12 +122,12 @@ export default function SettingsPage() {
             value={settings.openaiApiKey}
             onChange={e => setSettings(s => ({ ...s, openaiApiKey: e.target.value }))}
             placeholder="sk-..."
-            className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+            className="w-full bg-[#1a1f2e] border border-gray-700/60 rounded-lg px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-teal-500/50 "
           />
         </div>
 
         {/* Anthropic API Key */}
-        <div className="bg-gray-900 border border-gray-800 rounded-xl p-6">
+        <div className="bg-[#131720] border border-gray-800/60 rounded-xl p-6">
           <div className="flex items-center justify-between mb-4">
             <div>
               <h2 className="text-base font-semibold text-white">Anthropic API Key</h2>
@@ -140,12 +140,12 @@ export default function SettingsPage() {
             value={settings.anthropicApiKey}
             onChange={e => setSettings(s => ({ ...s, anthropicApiKey: e.target.value }))}
             placeholder="sk-ant-..."
-            className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+            className="w-full bg-[#1a1f2e] border border-gray-700/60 rounded-lg px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-teal-500/50 "
           />
         </div>
 
         {/* YouTube API Key */}
-        <div className="bg-gray-900 border border-gray-800 rounded-xl p-6">
+        <div className="bg-[#131720] border border-gray-800/60 rounded-xl p-6">
           <div className="flex items-center justify-between mb-4">
             <div>
               <h2 className="text-base font-semibold text-white">YouTube Data API Key</h2>
@@ -158,20 +158,20 @@ export default function SettingsPage() {
             value={settings.youtubeApiKey}
             onChange={e => setSettings(s => ({ ...s, youtubeApiKey: e.target.value }))}
             placeholder="AIza..."
-            className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+            className="w-full bg-[#1a1f2e] border border-gray-700/60 rounded-lg px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-teal-500/50 "
           />
         </div>
 
         {/* Default Model */}
-        <div className="bg-gray-900 border border-gray-800 rounded-xl p-6">
+        <div className="bg-[#131720] border border-gray-800/60 rounded-xl p-6">
           <h2 className="text-base font-semibold text-white mb-4">Default AI Model</h2>
           <div className="flex gap-3">
             <button
               onClick={() => setSettings(s => ({ ...s, defaultModel: 'openai' }))}
               className={`flex-1 py-2.5 px-4 rounded-lg text-sm font-medium transition-colors border ${
                 settings.defaultModel === 'openai'
-                  ? 'bg-blue-600/20 border-blue-500 text-blue-400'
-                  : 'bg-gray-800 border-gray-700 text-gray-400 hover:border-gray-600'
+                  ? 'bg-teal-600/20 border-blue-500 text-teal-400'
+                  : 'bg-[#1a1f2e] border-gray-700/60 text-gray-400 hover:border-gray-600'
               }`}
             >
               GPT-4o (OpenAI)
@@ -180,8 +180,8 @@ export default function SettingsPage() {
               onClick={() => setSettings(s => ({ ...s, defaultModel: 'anthropic' }))}
               className={`flex-1 py-2.5 px-4 rounded-lg text-sm font-medium transition-colors border ${
                 settings.defaultModel === 'anthropic'
-                  ? 'bg-blue-600/20 border-blue-500 text-blue-400'
-                  : 'bg-gray-800 border-gray-700 text-gray-400 hover:border-gray-600'
+                  ? 'bg-teal-600/20 border-blue-500 text-teal-400'
+                  : 'bg-[#1a1f2e] border-gray-700/60 text-gray-400 hover:border-gray-600'
               }`}
             >
               Claude (Anthropic)
@@ -194,12 +194,12 @@ export default function SettingsPage() {
           <button
             onClick={handleSave}
             disabled={saving}
-            className="bg-blue-600 hover:bg-blue-700 disabled:bg-blue-600/50 text-white px-6 py-2.5 rounded-lg text-sm font-medium transition-colors"
+            className="bg-teal-600 hover:bg-teal-700 disabled:bg-teal-600/50 text-white px-6 py-2.5 rounded-lg text-sm font-medium transition-colors"
           >
             {saving ? 'Saving...' : 'Save Settings'}
           </button>
           {saved && (
-            <span className="text-sm text-emerald-400 flex items-center gap-1">
+            <span className="text-sm text-teal-400 flex items-center gap-1">
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
               </svg>
@@ -218,10 +218,10 @@ function TestButton({ status, onClick }: { status: string; onClick: () => void }
       onClick={onClick}
       disabled={status === 'testing'}
       className={`text-xs px-3 py-1.5 rounded-lg font-medium transition-colors ${
-        status === 'success' ? 'bg-emerald-600/20 text-emerald-400 border border-emerald-500/30' :
+        status === 'success' ? 'bg-teal-500/15 text-teal-400 border border-teal-500/30' :
         status === 'error' ? 'bg-red-600/20 text-red-400 border border-red-500/30' :
-        status === 'testing' ? 'bg-gray-800 text-gray-400 border border-gray-700' :
-        'bg-gray-800 text-gray-400 border border-gray-700 hover:border-gray-600 hover:text-white'
+        status === 'testing' ? 'bg-[#1a1f2e] text-gray-400 border border-gray-700/60' :
+        'bg-[#1a1f2e] text-gray-400 border border-gray-700/60 hover:border-gray-600 hover:text-white'
       }`}
     >
       {status === 'testing' ? 'Testing...' :

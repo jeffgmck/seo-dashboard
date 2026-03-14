@@ -140,11 +140,11 @@ export default function ClientSettingsPage({ params }: { params: Promise<{ id: s
           <p className="text-gray-400 mt-1">Configure client profile, GBP data, and preferences</p>
         </div>
         <div className="flex items-center gap-3">
-          {saved && <span className="text-sm text-emerald-400">Saved</span>}
+          {saved && <span className="text-sm text-teal-400">Saved</span>}
           <button
             onClick={handleSave}
             disabled={saving}
-            className="bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+            className="bg-teal-600 hover:bg-teal-700 disabled:opacity-50 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
           >
             {saving ? 'Saving...' : 'Save Settings'}
           </button>
@@ -152,14 +152,14 @@ export default function ClientSettingsPage({ params }: { params: Promise<{ id: s
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-1 mb-6 bg-gray-900 p-1 rounded-lg border border-gray-800 overflow-x-auto">
+      <div className="flex gap-1 mb-6 bg-[#131720] p-1 rounded-lg border border-gray-800/60 overflow-x-auto">
         {tabs.map(tab => (
           <button
             key={tab.key}
             onClick={() => setActiveTab(tab.key)}
             className={`px-4 py-2 rounded-md text-sm font-medium transition-colors whitespace-nowrap ${
               activeTab === tab.key
-                ? 'bg-gray-800 text-white'
+                ? 'bg-[#1a1f2e] text-white'
                 : 'text-gray-400 hover:text-gray-200'
             }`}
           >
@@ -169,7 +169,7 @@ export default function ClientSettingsPage({ params }: { params: Promise<{ id: s
       </div>
 
       {/* Tab Content */}
-      <div className="bg-gray-900 border border-gray-800 rounded-xl p-6">
+      <div className="bg-[#131720] border border-gray-800/60 rounded-xl p-6">
         {activeTab === 'business' && (
           <div className="space-y-4">
             <h2 className="text-base font-semibold text-white mb-4">Business Information</h2>
@@ -200,11 +200,11 @@ export default function ClientSettingsPage({ params }: { params: Promise<{ id: s
                 }}
                 placeholder={"Primary Category: Plumber\n\nAdditional Categories:\n- Drainage Service\n- Gas Installation Service\n\nServices:\n- Drain Cleaning\n- Water Heater Installation\n- Pipe Repair"}
                 rows={8}
-                className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 font-mono"
+                className="w-full bg-[#1a1f2e] border border-gray-700/60 rounded-lg px-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-teal-500/50 font-mono"
               />
               <button
                 onClick={() => parseGBPData(settings.gbpRawData)}
-                className="mt-2 bg-gray-800 hover:bg-gray-700 text-gray-300 px-4 py-2 rounded-lg text-sm transition-colors border border-gray-700"
+                className="mt-2 bg-[#1a1f2e] hover:bg-gray-700 text-gray-300 px-4 py-2 rounded-lg text-sm transition-colors border border-gray-700/60"
               >
                 Parse GBP Data
               </button>
@@ -226,7 +226,7 @@ export default function ClientSettingsPage({ params }: { params: Promise<{ id: s
                         updated[i] = e.target.value;
                         setSettings({ ...settings, gbpSecondaryCategories: updated });
                       }}
-                      className="flex-1 bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-blue-500"
+                      className="flex-1 bg-[#1a1f2e] border border-gray-700/60 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-teal-500/50"
                     />
                     <button
                       onClick={() => {
@@ -243,7 +243,7 @@ export default function ClientSettingsPage({ params }: { params: Promise<{ id: s
                 ))}
                 <button
                   onClick={() => setSettings({ ...settings, gbpSecondaryCategories: [...settings.gbpSecondaryCategories, ''] })}
-                  className="text-xs text-blue-400 hover:text-blue-300 transition-colors"
+                  className="text-xs text-teal-400 hover:text-blue-300 transition-colors"
                 >
                   + Add Category
                 </button>
@@ -262,7 +262,7 @@ export default function ClientSettingsPage({ params }: { params: Promise<{ id: s
                         updated[i] = { ...svc, name: e.target.value };
                         setSettings({ ...settings, gbpServices: updated });
                       }}
-                      className="flex-1 bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-blue-500"
+                      className="flex-1 bg-[#1a1f2e] border border-gray-700/60 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-teal-500/50"
                     />
                     <select
                       value={svc.category}
@@ -271,7 +271,7 @@ export default function ClientSettingsPage({ params }: { params: Promise<{ id: s
                         updated[i] = { ...svc, category: e.target.value };
                         setSettings({ ...settings, gbpServices: updated });
                       }}
-                      className="bg-gray-800 border border-gray-700 rounded-lg px-2 py-2 text-xs text-gray-400 focus:outline-none focus:border-blue-500"
+                      className="bg-[#1a1f2e] border border-gray-700/60 rounded-lg px-2 py-2 text-xs text-gray-400 focus:outline-none focus:border-teal-500/50"
                     >
                       <option value={settings.gbpPrimaryCategory}>{settings.gbpPrimaryCategory || 'Primary'}</option>
                       {settings.gbpSecondaryCategories.map(cat => (
@@ -296,7 +296,7 @@ export default function ClientSettingsPage({ params }: { params: Promise<{ id: s
                     ...settings,
                     gbpServices: [...settings.gbpServices, { name: '', category: settings.gbpPrimaryCategory, hasPage: false }],
                   })}
-                  className="text-xs text-blue-400 hover:text-blue-300 transition-colors"
+                  className="text-xs text-teal-400 hover:text-blue-300 transition-colors"
                 >
                   + Add Service
                 </button>
@@ -315,7 +315,7 @@ export default function ClientSettingsPage({ params }: { params: Promise<{ id: s
                 onChange={e => setSettings({ ...settings, voiceTone: e.target.value })}
                 placeholder="e.g., Professional but friendly, conversational, uses humor occasionally..."
                 rows={3}
-                className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-500"
+                className="w-full bg-[#1a1f2e] border border-gray-700/60 rounded-lg px-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-teal-500/50"
               />
             </div>
             <div>
@@ -325,7 +325,7 @@ export default function ClientSettingsPage({ params }: { params: Promise<{ id: s
                 onChange={e => setSettings({ ...settings, targetAudience: e.target.value })}
                 placeholder="e.g., Homeowners aged 30-65 in suburban areas..."
                 rows={2}
-                className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-500"
+                className="w-full bg-[#1a1f2e] border border-gray-700/60 rounded-lg px-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-teal-500/50"
               />
             </div>
             <div>
@@ -334,7 +334,7 @@ export default function ClientSettingsPage({ params }: { params: Promise<{ id: s
                 value={settings.wordsToUse.join(', ')}
                 onChange={e => setSettings({ ...settings, wordsToUse: e.target.value.split(',').map(w => w.trim()).filter(Boolean) })}
                 placeholder="reliable, trusted, experienced, local"
-                className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-500"
+                className="w-full bg-[#1a1f2e] border border-gray-700/60 rounded-lg px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-teal-500/50"
               />
             </div>
             <div>
@@ -343,7 +343,7 @@ export default function ClientSettingsPage({ params }: { params: Promise<{ id: s
                 value={settings.wordsToAvoid.join(', ')}
                 onChange={e => setSettings({ ...settings, wordsToAvoid: e.target.value.split(',').map(w => w.trim()).filter(Boolean) })}
                 placeholder="cheap, discount, cutting-edge, leverage"
-                className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-500"
+                className="w-full bg-[#1a1f2e] border border-gray-700/60 rounded-lg px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-teal-500/50"
               />
             </div>
             <div>
@@ -353,7 +353,7 @@ export default function ClientSettingsPage({ params }: { params: Promise<{ id: s
                 onChange={e => setSettings({ ...settings, writingSamples: e.target.value })}
                 placeholder="Paste examples of content in the desired voice/tone..."
                 rows={5}
-                className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-500"
+                className="w-full bg-[#1a1f2e] border border-gray-700/60 rounded-lg px-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-teal-500/50"
               />
             </div>
             <div>
@@ -362,7 +362,7 @@ export default function ClientSettingsPage({ params }: { params: Promise<{ id: s
                 value={settings.imageStylePreference}
                 onChange={e => setSettings({ ...settings, imageStylePreference: e.target.value })}
                 placeholder="e.g., Professional photography style, clean modern look..."
-                className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-500"
+                className="w-full bg-[#1a1f2e] border border-gray-700/60 rounded-lg px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-teal-500/50"
               />
             </div>
           </div>
@@ -381,7 +381,7 @@ export default function ClientSettingsPage({ params }: { params: Promise<{ id: s
                   max="5"
                   value={settings.averageRating}
                   onChange={e => setSettings({ ...settings, averageRating: parseFloat(e.target.value) || 0 })}
-                  className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500"
+                  className="w-full bg-[#1a1f2e] border border-gray-700/60 rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none focus:border-teal-500/50"
                 />
               </div>
               <div>
@@ -390,7 +390,7 @@ export default function ClientSettingsPage({ params }: { params: Promise<{ id: s
                   type="number"
                   value={settings.reviewCount}
                   onChange={e => setSettings({ ...settings, reviewCount: parseInt(e.target.value) || 0 })}
-                  className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500"
+                  className="w-full bg-[#1a1f2e] border border-gray-700/60 rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none focus:border-teal-500/50"
                 />
               </div>
             </div>
@@ -416,7 +416,7 @@ export default function ClientSettingsPage({ params }: { params: Promise<{ id: s
               onChange={e => setSettings({ ...settings, localDetails: e.target.value })}
               placeholder="e.g., Houston has clay soil that causes foundation issues. Most homes built in the 1970s-1990s have galvanized steel pipes. Summer temps exceed 100°F requiring heavy AC usage..."
               rows={10}
-              className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-500"
+              className="w-full bg-[#1a1f2e] border border-gray-700/60 rounded-lg px-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-teal-500/50"
             />
           </div>
         )}
@@ -433,7 +433,7 @@ export default function ClientSettingsPage({ params }: { params: Promise<{ id: s
                 value={settings.wpAppPassword}
                 onChange={e => setSettings({ ...settings, wpAppPassword: e.target.value })}
                 placeholder="xxxx xxxx xxxx xxxx xxxx xxxx"
-                className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-500"
+                className="w-full bg-[#1a1f2e] border border-gray-700/60 rounded-lg px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-teal-500/50"
               />
               <p className="text-xs text-gray-600 mt-1">Generate at WordPress Dashboard → Users → Application Passwords</p>
             </div>
@@ -456,7 +456,7 @@ export default function ClientSettingsPage({ params }: { params: Promise<{ id: s
                   alert('Connection test failed');
                 }
               }}
-              className="bg-gray-800 hover:bg-gray-700 text-gray-300 px-4 py-2 rounded-lg text-sm transition-colors border border-gray-700"
+              className="bg-[#1a1f2e] hover:bg-gray-700 text-gray-300 px-4 py-2 rounded-lg text-sm transition-colors border border-gray-700/60"
             >
               Test WordPress Connection
             </button>
@@ -480,7 +480,7 @@ function Field({ label, value, onChange, placeholder }: {
         value={value}
         onChange={e => onChange(e.target.value)}
         placeholder={placeholder}
-        className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-500"
+        className="w-full bg-[#1a1f2e] border border-gray-700/60 rounded-lg px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-teal-500/50"
       />
     </div>
   );

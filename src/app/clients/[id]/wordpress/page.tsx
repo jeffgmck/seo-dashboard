@@ -64,7 +64,7 @@ export default function WordPressPublishPage({ params }: { params: Promise<{ id:
       )}
 
       {/* Drafts */}
-      <div className="bg-gray-900 border border-gray-800 rounded-xl p-6 mb-6">
+      <div className="bg-[#131720] border border-gray-800/60 rounded-xl p-6 mb-6">
         <h2 className="text-base font-semibold text-white mb-4">
           Draft Content ({drafts.length})
         </h2>
@@ -73,7 +73,7 @@ export default function WordPressPublishPage({ params }: { params: Promise<{ id:
         ) : (
           <div className="space-y-3">
             {drafts.map(item => (
-              <div key={item.id} className="flex items-center justify-between p-4 border border-gray-800 rounded-lg">
+              <div key={item.id} className="flex items-center justify-between p-4 border border-gray-800/60 rounded-lg">
                 <div className="min-w-0 flex-1">
                   <h3 className="text-sm font-medium text-white truncate">{item.title}</h3>
                   <div className="flex items-center gap-3 mt-1">
@@ -81,8 +81,8 @@ export default function WordPressPublishPage({ params }: { params: Promise<{ id:
                     <span className="text-xs text-gray-600">{item.wordCount} words</span>
                     <span className={`text-xs px-2 py-0.5 rounded ${
                       item.status === 'final'
-                        ? 'bg-emerald-600/20 text-emerald-400 border border-emerald-500/30'
-                        : 'bg-gray-800 text-gray-400 border border-gray-700'
+                        ? 'bg-teal-500/15 text-teal-400 border border-teal-500/30'
+                        : 'bg-[#1a1f2e] text-gray-400 border border-gray-700/60'
                     }`}>
                       {item.status === 'final' ? 'Ready' : item.status}
                     </span>
@@ -94,14 +94,14 @@ export default function WordPressPublishPage({ params }: { params: Promise<{ id:
                 <div className="flex items-center gap-2 ml-4">
                   <button
                     onClick={() => window.open(`/clients/${id}/content-library?view=${item.id}`, '_self')}
-                    className="text-xs px-3 py-1.5 rounded-lg bg-gray-800 text-gray-400 border border-gray-700 hover:border-gray-600 transition-colors"
+                    className="text-xs px-3 py-1.5 rounded-lg bg-[#1a1f2e] text-gray-400 border border-gray-700/60 hover:border-gray-600 transition-colors"
                   >
                     Preview
                   </button>
                   <button
                     onClick={() => publishToWP(item.id)}
                     disabled={!wpConnected || publishing === item.id}
-                    className="text-xs px-3 py-1.5 rounded-lg bg-blue-600/20 text-blue-400 border border-blue-500/30 hover:bg-blue-600/30 transition-colors disabled:opacity-50"
+                    className="text-xs px-3 py-1.5 rounded-lg bg-teal-600/20 text-teal-400 border border-teal-500/30 hover:bg-teal-600/30 transition-colors disabled:opacity-50"
                   >
                     {publishing === item.id ? 'Publishing...' : 'Publish'}
                   </button>
@@ -113,7 +113,7 @@ export default function WordPressPublishPage({ params }: { params: Promise<{ id:
       </div>
 
       {/* Published */}
-      <div className="bg-gray-900 border border-gray-800 rounded-xl p-6">
+      <div className="bg-[#131720] border border-gray-800/60 rounded-xl p-6">
         <h2 className="text-base font-semibold text-white mb-4">
           Published ({published.length})
         </h2>
@@ -122,20 +122,20 @@ export default function WordPressPublishPage({ params }: { params: Promise<{ id:
         ) : (
           <div className="space-y-3">
             {published.map(item => (
-              <div key={item.id} className="flex items-center justify-between p-4 border border-gray-800 rounded-lg">
+              <div key={item.id} className="flex items-center justify-between p-4 border border-gray-800/60 rounded-lg">
                 <div className="min-w-0 flex-1">
                   <h3 className="text-sm font-medium text-white truncate">{item.title}</h3>
                   <div className="flex items-center gap-3 mt-1">
                     <span className="text-xs text-gray-500">{item.targetKeyword}</span>
-                    <span className="text-xs text-emerald-400">{item.wordCount} words</span>
+                    <span className="text-xs text-teal-400">{item.wordCount} words</span>
                     {item.wpUrl && (
-                      <a href={item.wpUrl} target="_blank" rel="noopener noreferrer" className="text-xs text-blue-400 hover:underline">
+                      <a href={item.wpUrl} target="_blank" rel="noopener noreferrer" className="text-xs text-teal-400 hover:underline">
                         View on WordPress
                       </a>
                     )}
                   </div>
                 </div>
-                <span className="text-xs px-2 py-0.5 rounded bg-emerald-600/20 text-emerald-400 border border-emerald-500/30">
+                <span className="text-xs px-2 py-0.5 rounded bg-teal-500/15 text-teal-400 border border-teal-500/30">
                   Published
                 </span>
               </div>
