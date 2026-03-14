@@ -208,6 +208,102 @@ Content:
 ${content.substring(0, 2000)}...`
         );
 
+        // Generate images via DALL-E
+        const images: { id: string; prompt: string; url: string; altText: string; createdAt: string }[] = [];
+        const settings = getSettings();
+        if (settings.openaiApiKey && imagesPerPage > 0) {
+          send({ log: `Generating ${imagesPerPage} images via DALL-E...` });
+
+          // Ask AI to generate image prompts based on the content
+          const imagePromptsRaw = await callAI(
+            `Based on this service page content for "${service} in ${city}", generate exactly ${imagesPerPage} image descriptions for DALL-E.
+Each image should be relevant to the service and location. Return ONLY a JSON array of objects with "prompt" and "alt" fields.
+Image style preference: ${clientSettings.imageStylePreference || 'professional photography'}
+
+Example format:
+[{"prompt": "Professional plumber fixing...", "alt": "Plumber repairing..."}]
+
+Content summary: ${content.substring(0, 1000)}`
+          );
+
+          let imagePrompts: { prompt: string; alt: string }[] = [];
+          try {
+            const jsonMatch = imagePromptsRaw.match(/\[[\s\S]*\]/);
+            if (jsonMatch) {
+              imagePrompts = JSON.parse(jsonMatch[0]);
+            }
+          } catch {
+            // Fallback prompts
+            imagePrompts = Array.from({ length: imagesPerPage }, (_, i) => ({
+              prompt: `${clientSettings.imageStylePreference || 'Professional photography'}: ${service} service in ${city}, image ${i + 1}. High quality, suitable for professional website.`,
+              alt: `${service} in ${city}`,
+            }));
+          }
+
+          for (let i = 0; i < Math.min(imagePrompts.length, imagesPerPage); i++) {
+            try {
+              send({ log: `Generating image ${i + 1}/${imagesPerPage}...` });
+              const imgRes = await fetch('https://api.openai.com/v1/images/generations', {
+                method: 'POST',
+                headers: {
+                  'Authorization': `Bearer ${settings.openaiApiKey}`,
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                  model: 'dall-e-3',
+                  prompt: `${clientSettings.imageStylePreference || 'Professional photography'}: ${imagePrompts[i].prompt}`,
+                  n: 1,
+                  size: '1024x1024',
+                  quality: 'standard',
+                }),
+              });
+
+              if (imgRes.ok) {
+                const imgData = await imgRes.json();
+                const imageUrl = imgData.data[0]?.url;
+                if (imageUrl) {
+                  images.push({
+                    id: crypto.randomUUID(),
+                    prompt: imagePrompts[i].prompt,
+                    url: imageUrl,
+                    altText: imagePrompts[i].alt,
+                    createdAt: new Date().toISOString(),
+                  });
+                  send({ log: `Image ${i + 1} generated successfully` });
+                }
+              } else {
+                send({ log: `Image ${i + 1} failed - DALL-E error` });
+              }
+            } catch {
+              send({ log: `Image ${i + 1} failed` });
+            }
+          }
+          send({ log: `${images.length}/${imagesPerPage} images generated` });
+        }
+
+        // Inject images into content HTML
+        if (images.length > 0) {
+          const h2Matches = [...content.matchAll(/<\/h2>/gi)];
+          let insertCount = 0;
+          let offset = 0;
+          for (let i = 0; i < h2Matches.length && insertCount < images.length; i++) {
+            // Insert image after every other H2 section
+            if (i % 2 === 0) {
+              const img = images[insertCount];
+              const imgHtml = `\n<figure><img src="${img.url}" alt="${img.altText}" width="1024" height="1024" /><figcaption>${img.altText}</figcaption></figure>\n`;
+              const pos = (h2Matches[i].index ?? 0) + h2Matches[i][0].length + offset;
+              content = content.slice(0, pos) + imgHtml + content.slice(pos);
+              offset += imgHtml.length;
+              insertCount++;
+            }
+          }
+          // If any images left, append at the end before closing
+          for (let i = insertCount; i < images.length; i++) {
+            const img = images[i];
+            content += `\n<figure><img src="${img.url}" alt="${img.altText}" width="1024" height="1024" /><figcaption>${img.altText}</figcaption></figure>\n`;
+          }
+        }
+
         // Count words
         const wordCount = content.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim().split(' ').length;
 
@@ -226,7 +322,7 @@ ${content.substring(0, 2000)}...`
           content,
           outline,
           schemaMarkup: schema,
-          images: [] as { id: string; prompt: string; url: string; altText: string; createdAt: string }[],
+          images,
           wordCount,
           status: (autoHumanize ? 'final' : 'draft') as 'final' | 'draft',
           passesCompleted: autoHumanize ? 8 : 1,
