@@ -43,15 +43,15 @@ export default function GBPAuditPage({ params }: { params: Promise<{ id: string 
           city,
         }),
       });
+      const data = await res.json();
       if (res.ok) {
-        const data = await res.json();
         setAudit(data);
         setProgress('');
       } else {
-        setProgress('Audit failed - check API keys in Settings');
+        setProgress(data.error || 'Audit failed - check API keys in Settings');
       }
-    } catch {
-      setProgress('Audit failed');
+    } catch (err) {
+      setProgress(`Audit failed: ${err instanceof Error ? err.message : 'Unknown error'}`);
     }
     setRunning(false);
   }

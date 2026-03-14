@@ -57,10 +57,13 @@ Respond in this exact JSON format:
           messages: [{ role: 'user', content: prompt }],
         }),
       });
-      if (res.ok) {
-        const data = await res.json();
-        content = data.content[0].text;
+      if (!res.ok) {
+        const errBody = await res.text();
+        console.error('Anthropic API error:', res.status, errBody);
+        return NextResponse.json({ error: `Anthropic API error (${res.status}): ${errBody.substring(0, 200)}` }, { status: 500 });
       }
+      const data = await res.json();
+      content = data.content[0].text;
     } else if (settings.openaiApiKey) {
       const res = await fetch('https://api.openai.com/v1/chat/completions', {
         method: 'POST',
@@ -75,17 +78,21 @@ Respond in this exact JSON format:
           response_format: { type: 'json_object' },
         }),
       });
-      if (res.ok) {
-        const data = await res.json();
-        content = data.choices[0].message.content;
+      if (!res.ok) {
+        const errBody = await res.text();
+        console.error('OpenAI API error:', res.status, errBody);
+        return NextResponse.json({ error: `OpenAI API error (${res.status}): ${errBody.substring(0, 200)}` }, { status: 500 });
       }
+      const data = await res.json();
+      content = data.choices[0].message.content;
     } else {
-      return NextResponse.json({ error: 'No AI API key configured' }, { status: 400 });
+      return NextResponse.json({ error: 'No AI API key configured. Go to Settings and save your API key.' }, { status: 400 });
     }
 
     // Parse JSON from response
     const jsonMatch = content.match(/\{[\s\S]*\}/);
     if (!jsonMatch) {
+      console.error('Failed to parse AI response:', content.substring(0, 500));
       return NextResponse.json({ error: 'Failed to parse AI response' }, { status: 500 });
     }
 
@@ -109,6 +116,7 @@ Respond in this exact JSON format:
 
     return NextResponse.json(audit);
   } catch (error) {
-    return NextResponse.json({ error: 'Audit failed' }, { status: 500 });
+    console.error('GBP Audit error:', error);
+    return NextResponse.json({ error: `Audit failed: ${error instanceof Error ? error.message : 'Unknown error'}` }, { status: 500 });
   }
 }
