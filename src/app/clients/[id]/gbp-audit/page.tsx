@@ -11,12 +11,16 @@ export default function GBPAuditPage({ params }: { params: Promise<{ id: string 
   const [progress, setProgress] = useState('');
   const [primaryCategory, setPrimaryCategory] = useState('');
   const [city, setCity] = useState('');
+  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     fetch(`/api/clients/${id}/settings`).then(r => r.json()).then(data => {
       setClientSettings(data);
-      setCity(data.city);
-      setPrimaryCategory(data.gbpPrimaryCategory);
+      if (!loaded) {
+        setCity(data.city || '');
+        setPrimaryCategory(data.gbpPrimaryCategory || '');
+        setLoaded(true);
+      }
     });
     fetch(`/api/clients/${id}/gbp-audit`).then(r => r.json()).then(data => {
       if (data && data.clientId) setAudit(data);
